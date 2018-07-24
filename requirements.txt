@@ -1,0 +1,9 @@
+numpy
+sklearn
+pandas
+matplotlib
+xlrd
+scipy
+tqdm
+pydeepl
+json
