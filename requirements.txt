@@ -6,4 +6,5 @@ xlrd
 scipy
 tqdm
 pydeepl
-json
+BeautifulSoup
+Requests
