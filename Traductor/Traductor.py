@@ -1,22 +1,36 @@
 #pip.exe install [package name]
-
-import pydeepl
 import pandas as pd
 import numpy as np
 
 
 sentence = 'Un grand bonjour à mon pote PAD.'
-from_language = 'FR'
-to_language = 'EN'
-
-translation = pydeepl.translate(sentence, to_language, from_language)
-
-print(translation)
+from_language = 'fr'
+to_language = 'en'
 
 
+#With DeepL
+def deepl_trans(sentence, to_languge, from_language):
+    import pydeepl
+    translation = pydeepl.translate(sentence, to_lang=to_language, from_lang=from_language)
+    return(translation)
 # Using auto-detection
 #translation = pydeepl.translate(sentence, to_language)
 #print(translation)
+
+#With google
+def google_trans(sentence, to_language, from_language):
+    from googletrans import Translator  # Import Translator module from googletrans package
+    translator = Translator() # Create object of Translator.
+    translated = translator.translate(sentence,src=from_language,dest=to_language)
+    return(translated.text)
+
+#to save the translated file
+def save_to_excel(name, data):
+    writer = pd.ExcelWriter(str(name)+".xlsx")
+    data.to_excel(writer,'Sheet1')
+    writer.save()
+
+
 
 ####### data to translate #######
 path ='C:/Users/benjamin.schick/Desktop/Registre_A.xlsx'
@@ -39,7 +53,7 @@ for j in range(1, 11):
         action = (data[i:i + 1]["Action"+str(j)].values[0])
         if len(str(action)) < 5000 and str(action) != 'nan':
             try:
-                (data[i:i + 1]["Action" + str(j)].values[0])=pydeepl.translate(str(action), "EN", "FR")
+                (data[i:i + 1]["Action" + str(j)].values[0])=google_trans(str(action), "en", "fr")
                 print(action, "Action" + str(j), "ligne"+ str(i))
             except pydeepl.pydeepl.TranslationError:
                     print(i, j)
@@ -48,7 +62,7 @@ for j in range(1, 11):
 
 #to translate a column of an excel file
 
-def trad_excel(path, sheetName=0, column_name_to_trad,source_lang, target_lang):
+def trad_excel(path, column_name_to_trad,source_lang, target_lang, sheetName=0):
     #upload data from excel
     data = pd.read_excel(path, sheetName)
     data.index = range(0, len(data))
@@ -65,11 +79,4 @@ def trad_excel(path, sheetName=0, column_name_to_trad,source_lang, target_lang):
         except pydeepl.pydeepl.TranslationError:
     return data
 
-
-#to save the translated file
-
-def save_to_excel(name=no_name, file):
-    writer = pd.ExcelWriter(name+".xlsx")
-    data.to_excel(writer,'Sheet1')
-    writer.save()
 

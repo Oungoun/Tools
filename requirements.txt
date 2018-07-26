@@ -8,3 +8,6 @@ tqdm
 pydeepl
 BeautifulSoup
 Requests
+XlsxWriter
+ipython jupyter
+googletrans
