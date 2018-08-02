@@ -4,12 +4,12 @@ import numpy as np
 
 
 sentence = 'Un grand bonjour à mon pote PAD.'
-from_language = 'fr'
-to_language = 'en'
+from_language = 'FR'
+to_language = 'EN'
 
 
 #With DeepL
-def deepl_trans(sentence, to_languge, from_language):
+def deepl_trans(sentence, to_language, from_language):
     import pydeepl
     translation = pydeepl.translate(sentence, to_lang=to_language, from_lang=from_language)
     return(translation)
